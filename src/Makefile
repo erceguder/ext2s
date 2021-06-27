@@ -1,23 +1,25 @@
 all: ext2fs.h ext2fs.cpp
-	@g++ -o ext2fs ext2fs.cpp
+	@g++ -o ext2sutils ext2fs.cpp
 
-dup: ext2fs ../copy.img
-	@./ext2fs dup ../copy.img 14 2/5112bytefile.txt
-	@./ext2fs dup ../copy.img 12 13/vi_calisma.txt
+dup: ext2sutils ../copy.img
+	@./ext2sutils dup ../copy.img /folder/ostechnix.txt /5112bytefile.txt
+	@./ext2sutils dup ../copy.img /deneme.txt /folder/vi_calisma.txt
+	@./ext2sutils dup ../copy.img /deneme.txt /birdendokuza.txt
 
-test: ext2fs.h ext2fs.cpp ext2fs ../copy.img
+rm: ext2sutils ../copy.img
+	@./ext2sutils rm ../copy.img /folder/ostechnix.txt
+
+test: ext2fs.h ext2fs.cpp ext2sutils ../copy.img
 	@make all
 	@make dup
 
-abs_path:
-	@./ext2fs dup ../copy.img /folder/ostechnix.txt 2/5112bytefile.txt
-
 clear_img:
 	@rm -rf ../copy.img
+#	@rm -rf ../example.img
 #	@rm -rf ../fs-root
 
 prepare_img:
-#	dd if=/dev/zero of=../example.img bs=1024 count=512
+#	dd if=/dev/zero of=../example.img bs=2048 count=512
 #	mke2fs -t ext2 -b 2048 -N 64 ../example.img
 #	mkdir ../fs-root
 #	chmod g+rx ../fs-root
